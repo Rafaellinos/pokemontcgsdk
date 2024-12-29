@@ -8,6 +8,7 @@ import br.com.rafaellino.pokemontcgsdk.model.Card;
 public class Main {
   public static void main(String[] args) throws PokemonTcgSdkException {
     Client client = new RestClientImpl("");
-    Card.find(client, "dp3-1");
+    Card a = Card.find(client, "dp3-1");
+    System.out.println(a);
   }
 }

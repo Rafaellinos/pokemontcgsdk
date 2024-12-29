@@ -30,7 +30,8 @@ public record Card(
         Legality legalities,
         String regulationMark,
         CardImage images,
-        TcgPlayer tcgplayer
+        Price tcgplayer,
+        Price cardmarket
 ) {
 
   public static Card find(Client client, String id) throws PokemonTcgSdkException {

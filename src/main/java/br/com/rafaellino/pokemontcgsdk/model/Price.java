@@ -1,34 +1,26 @@
 package br.com.rafaellino.pokemontcgsdk.model;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Price {
 
-  private PriceProvider priceProvider;
-  private CardImageType cardImageType;
-  private HashMap<String, Object> priceInfo;
+  private LocalDate updatedAt;
+  private HashMap<String, Object> prices;
 
-  public PriceProvider getPriceProvider() {
-    return priceProvider;
+  public LocalDate getUpdatedAt() {
+    return updatedAt;
   }
 
-  public void setPriceProvider(PriceProvider priceProvider) {
-    this.priceProvider = priceProvider;
+  public void setUpdatedAt(LocalDate updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
-  public CardImageType getCardImageType() {
-    return cardImageType;
+  public HashMap<String, Object> getPrices() {
+    return prices;
   }
 
-  public void setCardImageType(CardImageType cardImageType) {
-    this.cardImageType = cardImageType;
-  }
-
-  public HashMap<String, Object> getPriceInfo() {
-    return priceInfo;
-  }
-
-  public void setPriceInfo(HashMap<String, Object> priceInfo) {
-    this.priceInfo = priceInfo;
+  public void setPrices(HashMap<String, Object> prices) {
+    this.prices = prices;
   }
 }

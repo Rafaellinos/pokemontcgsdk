@@ -11,20 +11,18 @@ import br.com.rafaellino.pokemontcgsdk.model.Rarity;
 import br.com.rafaellino.pokemontcgsdk.model.SubType;
 import br.com.rafaellino.pokemontcgsdk.model.SuperType;
 import br.com.rafaellino.pokemontcgsdk.model.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public final class JsonHandlerJacksonImpl implements JsonHandler {
 
@@ -39,13 +37,13 @@ public final class JsonHandlerJacksonImpl implements JsonHandler {
     simpleModule.addDeserializer(SubType.class, new SubTypeDeserializer());
     simpleModule.addDeserializer(SuperType.class, new SuperTypeDeserializer());
     simpleModule.addDeserializer(Type.class, new TypeDeserializer());
-    simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-    simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
     mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .registerModule(simpleModule)
-//            .registerModule(new JavaTimeModule())
+            .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    mapper.configOverride(LocalDate.class).setFormat(JsonFormat.Value.forPattern("yyyy/MM/dd"));
+    mapper.configOverride(LocalDateTime.class).setFormat(JsonFormat.Value.forPattern("yyyy/MM/dd HH:mm:ss"));
   }
 
 

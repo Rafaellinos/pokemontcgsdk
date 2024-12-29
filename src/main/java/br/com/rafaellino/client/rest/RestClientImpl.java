@@ -77,6 +77,10 @@ public class RestClientImpl implements Client {
     this(apiKey, null, null);
   }
 
+  public RestClientImpl(String apiKey, String uri) throws PokemonTcgSdkException {
+    this(apiKey, uri, null);
+  }
+
   public String getApiKey() {
     return apiKey;
   }
