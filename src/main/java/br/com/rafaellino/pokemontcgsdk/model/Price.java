@@ -7,6 +7,7 @@ public class Price {
 
   private LocalDate updatedAt;
   private HashMap<String, Object> prices;
+  private String url;
 
   public LocalDate getUpdatedAt() {
     return updatedAt;
@@ -22,5 +23,13 @@ public class Price {
 
   public void setPrices(HashMap<String, Object> prices) {
     this.prices = prices;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 }
