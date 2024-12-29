@@ -2,6 +2,11 @@
 
 This is the Pokémon TCG SDK Python implementation. It is a wrapper around the Pokémon TCG API of [pokemontcg.io](https://pokemontcg.io).
 
+## Requirements
+
+- Java 17+
+- Maven 3.9+
+
 ## Installation
 
 TODO
