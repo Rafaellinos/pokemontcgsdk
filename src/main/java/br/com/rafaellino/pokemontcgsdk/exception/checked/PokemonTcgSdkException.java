@@ -1,4 +1,4 @@
-package br.com.rafaellino.exception.checked;
+package br.com.rafaellino.pokemontcgsdk.exception.checked;
 
 public class PokemonTcgSdkException extends Exception {
   public PokemonTcgSdkException(String message) {

@@ -1,6 +1,6 @@
-package br.com.rafaellino.config;
+package br.com.rafaellino.pokemontcgsdk.config;
 
-import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
+import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

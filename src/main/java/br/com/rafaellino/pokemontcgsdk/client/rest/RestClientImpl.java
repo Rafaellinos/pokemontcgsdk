@@ -1,12 +1,12 @@
-package br.com.rafaellino.client.rest;
+package br.com.rafaellino.pokemontcgsdk.client.rest;
 
-import br.com.rafaellino.client.Client;
-import br.com.rafaellino.client.rest.dto.CardWrapper;
-import br.com.rafaellino.client.rest.dto.CardsWrapper;
-import br.com.rafaellino.config.ConfigLoader;
-import br.com.rafaellino.config.JsonHandler;
-import br.com.rafaellino.config.JsonHandlerJacksonImpl;
-import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
+import br.com.rafaellino.pokemontcgsdk.client.Client;
+import br.com.rafaellino.pokemontcgsdk.client.rest.dto.CardWrapper;
+import br.com.rafaellino.pokemontcgsdk.client.rest.dto.CardsWrapper;
+import br.com.rafaellino.pokemontcgsdk.config.ConfigLoader;
+import br.com.rafaellino.pokemontcgsdk.config.JsonHandler;
+import br.com.rafaellino.pokemontcgsdk.config.JsonHandlerJacksonImpl;
+import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.Card;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

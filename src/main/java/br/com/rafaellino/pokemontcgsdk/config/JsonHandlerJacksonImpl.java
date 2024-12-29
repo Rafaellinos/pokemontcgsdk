@@ -1,11 +1,11 @@
-package br.com.rafaellino.config;
+package br.com.rafaellino.pokemontcgsdk.config;
 
-import br.com.rafaellino.config.deserializer.CardImageTypeDeserializer;
-import br.com.rafaellino.config.deserializer.RarityDeserializer;
-import br.com.rafaellino.config.deserializer.SubTypeDeserializer;
-import br.com.rafaellino.config.deserializer.SuperTypeDeserializer;
-import br.com.rafaellino.config.deserializer.TypeDeserializer;
-import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
+import br.com.rafaellino.pokemontcgsdk.config.deserializer.CardImageTypeDeserializer;
+import br.com.rafaellino.pokemontcgsdk.config.deserializer.RarityDeserializer;
+import br.com.rafaellino.pokemontcgsdk.config.deserializer.SubTypeDeserializer;
+import br.com.rafaellino.pokemontcgsdk.config.deserializer.SuperTypeDeserializer;
+import br.com.rafaellino.pokemontcgsdk.config.deserializer.TypeDeserializer;
+import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.CardImageType;
 import br.com.rafaellino.pokemontcgsdk.model.Rarity;
 import br.com.rafaellino.pokemontcgsdk.model.SubType;

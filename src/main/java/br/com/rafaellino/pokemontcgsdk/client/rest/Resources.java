@@ -1,4 +1,4 @@
-package br.com.rafaellino.client.rest;
+package br.com.rafaellino.pokemontcgsdk.client.rest;
 
 import br.com.rafaellino.pokemontcgsdk.model.Card;
 

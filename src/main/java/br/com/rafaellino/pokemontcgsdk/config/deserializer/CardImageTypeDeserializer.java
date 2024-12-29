@@ -1,4 +1,4 @@
-package br.com.rafaellino.config.deserializer;
+package br.com.rafaellino.pokemontcgsdk.config.deserializer;
 
 
 import br.com.rafaellino.pokemontcgsdk.model.CardImageType;

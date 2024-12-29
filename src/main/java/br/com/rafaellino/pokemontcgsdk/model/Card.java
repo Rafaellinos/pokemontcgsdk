@@ -1,7 +1,7 @@
 package br.com.rafaellino.pokemontcgsdk.model;
 
-import br.com.rafaellino.client.Client;
-import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
+import br.com.rafaellino.pokemontcgsdk.client.Client;
+import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 
 import java.util.List;
 
