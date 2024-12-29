@@ -7,8 +7,6 @@ import br.com.rafaellino.config.JsonHandler;
 import br.com.rafaellino.config.JsonHandlerJacksonImpl;
 import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.Card;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +41,7 @@ public class RestClientImpl implements Client {
 
   public RestClientImpl(String apiKey, String uri, JsonHandler jsonHandler) throws PokemonTcgSdkException {
     if (jsonHandler == null) {
-      ObjectMapper objectMapper = new ObjectMapper();
-      objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-      jsonHandler = new JsonHandlerJacksonImpl(objectMapper);
+      jsonHandler = new JsonHandlerJacksonImpl();
     }
     this.jsonHandler = jsonHandler;
     this.properties = ConfigLoader.loadProperties("properties");

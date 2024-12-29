@@ -26,10 +26,10 @@ public record Card(
         String artist,
         Rarity rarity,
         String flavorText,
-        Integer nationalPokedexNumbers,
-        List<Legality> legalities,
+        List<Integer> nationalPokedexNumbers,
+        Legality legalities,
         String regulationMark,
-        List<CardImage> images,
+        CardImage images,
         TcgPlayer tcgplayer
 ) {
 
