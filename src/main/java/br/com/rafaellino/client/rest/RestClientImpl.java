@@ -1,9 +1,14 @@
 package br.com.rafaellino.client.rest;
 
 import br.com.rafaellino.client.Client;
+import br.com.rafaellino.client.rest.dto.CardWrapper;
 import br.com.rafaellino.config.ConfigLoader;
+import br.com.rafaellino.config.JsonHandler;
+import br.com.rafaellino.config.JsonHandlerJacksonImpl;
 import br.com.rafaellino.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.Card;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +27,7 @@ public class RestClientImpl implements Client {
   private final Properties properties;
   private final String apiKey;
   private final URI uri;
+  private final JsonHandler jsonHandler;
 
   private URI makeUri(String uri) throws PokemonTcgSdkException {
     if (uri == null) {
@@ -35,7 +41,13 @@ public class RestClientImpl implements Client {
     }
   }
 
-  public RestClientImpl(String apiKey, String uri) throws PokemonTcgSdkException {
+  public RestClientImpl(String apiKey, String uri, JsonHandler jsonHandler) throws PokemonTcgSdkException {
+    if (jsonHandler == null) {
+      ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+      jsonHandler = new JsonHandlerJacksonImpl(objectMapper);
+    }
+    this.jsonHandler = jsonHandler;
     this.properties = ConfigLoader.loadProperties("properties");
     this.apiKey = apiKey;
     this.uri = makeUri(uri);
@@ -51,6 +63,9 @@ public class RestClientImpl implements Client {
       HttpResponse<String> response = HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
       System.out.println(response.body());
       logger.info(response.body());
+      CardWrapper cardWrapper = jsonHandler.map(response.body(), CardWrapper.class);
+      System.out.println(cardWrapper);
+      return cardWrapper.data();
     } catch (URISyntaxException ex) {
       logger.error("invalid card uri", ex);
       throw new PokemonTcgSdkException(ex);
@@ -60,11 +75,10 @@ public class RestClientImpl implements Client {
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
-    return null;
   }
 
   public RestClientImpl(String apiKey) throws PokemonTcgSdkException {
-    this(apiKey, null);
+    this(apiKey, null, null);
   }
 
   public String getApiKey() {

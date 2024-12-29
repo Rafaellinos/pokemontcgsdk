@@ -1,6 +1,5 @@
 package br.com.rafaellino.pokemontcgsdk.model;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class Price {
