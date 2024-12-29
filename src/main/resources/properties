@@ -1,0 +1,2 @@
+endpoint=https://api.pokemontcg.io/v2
+timeout=3
