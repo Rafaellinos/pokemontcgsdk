@@ -37,4 +37,17 @@ public record Card(
   public static Card find(Client client, String id) throws PokemonTcgSdkException {
     return client.get(id);
   }
+
+  public static List<Card> where(Client client, String q) throws PokemonTcgSdkException {
+    return client.where(q);
+  }
+
+  public static List<Card> where(Client client, String q, Integer page, Integer pageSize) throws PokemonTcgSdkException {
+    return client.where(q, page, pageSize);
+  }
+
+  public static List<Card> all(Client client) throws PokemonTcgSdkException {
+    return client.all();
+  }
+
 }
