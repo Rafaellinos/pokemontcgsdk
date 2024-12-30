@@ -8,6 +8,7 @@ import br.com.rafaellino.pokemontcgsdk.config.JsonHandler;
 import br.com.rafaellino.pokemontcgsdk.config.JsonHandlerJacksonImpl;
 import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.Card;
+import br.com.rafaellino.pokemontcgsdk.model.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,49 +58,21 @@ public class RestClientImpl implements Client {
 
   @Override
   public List<Card> all() throws PokemonTcgSdkException {
-    HttpResponse<String> response = makeRequest(Resources.CARD, "");
+    HttpResponse<String> response = makeRequest("");
     CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
     return cardsWrapper.data();
   }
 
   @Override
-  public List<Card> where(String q, Integer page, Integer pageSize) throws PokemonTcgSdkException{
-    HttpResponse<String> response = makeRequest(Resources.CARD, "?q=" + q + "&page=" + page + "&pageSize=" + pageSize);
+  public List<Card> where(Query query) throws PokemonTcgSdkException {
+    HttpResponse<String> response = makeRequest(query.getPath());
     CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
     return cardsWrapper.data();
   }
 
-  @Override
-  public List<Card> where(Integer page) throws PokemonTcgSdkException {
-    HttpResponse<String> response = makeRequest(Resources.CARD, "?page=" + page);
-    CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
-    return cardsWrapper.data();
-  }
-
-  @Override
-  public List<Card> where(Integer page, Integer pageSize) throws PokemonTcgSdkException {
-    HttpResponse<String> response = makeRequest(Resources.CARD, "?size=" + page + "&pageSize=" + pageSize);
-    CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
-    return cardsWrapper.data();
-  }
-
-  @Override
-  public List<Card> where(String q) throws PokemonTcgSdkException {
-    HttpResponse<String> response = makeRequest(Resources.CARD, "?q=" + q);
-    CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
-    return cardsWrapper.data();
-  }
-
-  @Override
-  public List<Card> where(String q, String orderBy) throws PokemonTcgSdkException {
-    HttpResponse<String> response = makeRequest(Resources.CARD, "?q=" + q + "&orderBy=" + orderBy);
-    CardsWrapper cardsWrapper = jsonHandler.map(response.body(), CardsWrapper.class);
-    return cardsWrapper.data();
-  }
-
-  private HttpResponse<String> makeRequest(Resources resource, String query) throws PokemonTcgSdkException {
+  private HttpResponse<String> makeRequest(String query) throws PokemonTcgSdkException {
     try {
-      URI finalUri = new URI(uri.toString() + "/" + resource.getPath() + query);
+      URI finalUri = new URI(uri.toString() + query);
       HttpRequest httpRequest = HttpRequest.newBuilder().uri(finalUri).header("X-Api-Key", apiKey)
               .timeout(Duration.ofSeconds(Long.parseLong(properties.getProperty("timeout"))))
               .GET().build();
@@ -125,8 +98,8 @@ public class RestClientImpl implements Client {
   }
 
   @Override
-  public Card get(String id) throws PokemonTcgSdkException {
-    HttpResponse<String> response = this.makeRequest(Resources.CARD, "/" + id);
+  public Card get(Query query) throws PokemonTcgSdkException {
+    HttpResponse<String> response = this.makeRequest(query.getPath());
     CardWrapper cardWrapper = jsonHandler.map(response.body(), CardWrapper.class);
     return cardWrapper.data();
   }

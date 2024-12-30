@@ -1,6 +1,7 @@
 package br.com.rafaellino.pokemontcgsdk.model;
 
 import br.com.rafaellino.pokemontcgsdk.client.Client;
+import br.com.rafaellino.pokemontcgsdk.client.rest.Resources;
 import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 
 import java.util.List;
@@ -35,15 +36,15 @@ public record Card(
 ) {
 
   public static Card find(Client client, String id) throws PokemonTcgSdkException {
-    return client.get(id);
+    return client.get(Query.QueryBuilder.builder().resource(Resources.CARD).id(id).build());
   }
 
   public static List<Card> where(Client client, String q) throws PokemonTcgSdkException {
-    return client.where(q);
+    return client.where(Query.QueryBuilder.builder().resource(Resources.CARD).filter(q).build());
   }
 
   public static List<Card> where(Client client, String q, Integer page, Integer pageSize) throws PokemonTcgSdkException {
-    return client.where(q, page, pageSize);
+    return client.where(Query.QueryBuilder.builder().resource(Resources.CARD).filter(q).page(page).pageSize(pageSize).build());
   }
 
   public static List<Card> all(Client client) throws PokemonTcgSdkException {
