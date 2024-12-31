@@ -8,7 +8,7 @@ import br.com.rafaellino.pokemontcgsdk.config.JsonHandler;
 import br.com.rafaellino.pokemontcgsdk.config.JsonHandlerJacksonImpl;
 import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 import br.com.rafaellino.pokemontcgsdk.model.Card;
-import br.com.rafaellino.pokemontcgsdk.model.Query;
+import br.com.rafaellino.pokemontcgsdk.client.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,22 +27,18 @@ public class RestClientImpl implements Client {
   private static final Logger logger = LoggerFactory.getLogger(RestClientImpl.class);
   private final Properties properties;
   private final String apiKey;
-  private final URI uri;
+  private final String uri;
   private final JsonHandler jsonHandler;
+  private final HttpClient httpClient;
 
-  private URI makeUri(String uri) throws PokemonTcgSdkException {
+  private String getUriFromProperties(String uri) {
     if (uri == null) {
       uri = properties.getProperty("endpoint");
     }
-    try {
-      return new URI(uri);
-    } catch (URISyntaxException e) {
-      logger.error("Invalid uri", e);
-      throw new PokemonTcgSdkException(e);
-    }
+    return uri;
   }
 
-  public RestClientImpl(String apiKey, String uri, JsonHandler jsonHandler) throws PokemonTcgSdkException {
+  public RestClientImpl(String apiKey, String uri, JsonHandler jsonHandler, HttpClient httpClient) throws PokemonTcgSdkException {
     if (jsonHandler == null) {
       jsonHandler = new JsonHandlerJacksonImpl();
     }
@@ -50,10 +46,14 @@ public class RestClientImpl implements Client {
       apiKey = System.getenv("POKEMONTCG_IO_API_KEY");
       apiKey = apiKey == null ? "" : apiKey;
     }
+    if (httpClient == null) {
+      httpClient = HttpClient.newHttpClient();
+    }
     this.jsonHandler = jsonHandler;
     this.properties = ConfigLoader.loadProperties("properties");
     this.apiKey = apiKey;
-    this.uri = makeUri(uri);
+    this.uri = getUriFromProperties(uri);
+    this.httpClient = httpClient;
   }
 
   @Override
@@ -72,11 +72,11 @@ public class RestClientImpl implements Client {
 
   private HttpResponse<String> makeRequest(String query) throws PokemonTcgSdkException {
     try {
-      URI finalUri = new URI(uri.toString() + query);
+      URI finalUri = new URI(uri + query);
       HttpRequest httpRequest = HttpRequest.newBuilder().uri(finalUri).header("X-Api-Key", apiKey)
               .timeout(Duration.ofSeconds(Long.parseLong(properties.getProperty("timeout"))))
               .GET().build();
-      HttpResponse<String> response = HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
       logger.debug("Response: {}", response.body());
       if (response.statusCode() == 404) {
         throw new PokemonTcgSdkException("Card not found with query " + query);
@@ -105,22 +105,22 @@ public class RestClientImpl implements Client {
   }
 
   public RestClientImpl(String apiKey) throws PokemonTcgSdkException {
-    this(apiKey, null, null);
+    this(apiKey, null, null, null);
   }
 
   public RestClientImpl(String apiKey, String uri) throws PokemonTcgSdkException {
-    this(apiKey, uri, null);
+    this(apiKey, uri, null, null);
   }
 
   public RestClientImpl() throws PokemonTcgSdkException {
-    this(null, null, null);
+    this(null, null, null, null);
   }
 
   public String getApiKey() {
     return apiKey;
   }
 
-  public URI getUri() {
+  public String getUri() {
     return uri;
   }
 }

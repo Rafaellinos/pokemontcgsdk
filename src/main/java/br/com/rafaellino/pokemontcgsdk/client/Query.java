@@ -1,4 +1,4 @@
-package br.com.rafaellino.pokemontcgsdk.model;
+package br.com.rafaellino.pokemontcgsdk.client;
 
 import br.com.rafaellino.pokemontcgsdk.client.rest.Resources;
 import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;

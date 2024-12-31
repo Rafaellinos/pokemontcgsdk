@@ -1,6 +1,7 @@
 package br.com.rafaellino.pokemontcgsdk.model;
 
 import br.com.rafaellino.pokemontcgsdk.client.Client;
+import br.com.rafaellino.pokemontcgsdk.client.Query;
 import br.com.rafaellino.pokemontcgsdk.client.rest.Resources;
 import br.com.rafaellino.pokemontcgsdk.exception.checked.PokemonTcgSdkException;
 
